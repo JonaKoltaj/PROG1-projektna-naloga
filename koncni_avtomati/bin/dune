@@ -1,0 +1,4 @@
+(executable
+ (public_name koncni_avtomati)
+ (name main)
+ (libraries koncni_avtomati))
