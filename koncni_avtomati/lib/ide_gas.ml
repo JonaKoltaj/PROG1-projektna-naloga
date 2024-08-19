@@ -117,6 +117,3 @@ let pozeni avtomat niz =
        en_korak_preberi () || en_korak_ne_preberi ()
   in
   aux [zacetni_nemudni_opis] zacetni_nemudni_opis
-
-
-let rec f _ = f ()
