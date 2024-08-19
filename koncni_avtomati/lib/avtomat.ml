@@ -1,13 +1,16 @@
+(*Koncni avtomati s skladom*)
+
 type stanje = string
-type vhodna_abeceda = Crka of char | Prazni_niz of unit
-type skladovna_abeceda = Crka of char | Prazni_niz of unit
+type crka_ali_eps = Crka of char | Eps of unit
 
 type avtomat = {
     stanja : stanje list;
-    vhodna_abeceda : vhodna_abeceda list;
-    skladovna_abeceda : skladovna_abeceda list;
+    vhodna_abeceda : char list;
+    skladovna_abeceda : char list;
+    (* Prehodno relacijo podamo kot relacijo med stanjem, vhodnim simbolom ter skladovnim simbolom in izhodnim stanjem ter izhodnim skladovnim nizom.
+       Vhodni simbol in skladovni simbol sta lahko tudi prazna.*)
     prehodna_relacija :
-      (stanje * vhodna_abeceda * skladovna_abeceda * stanje * (char list)) list;
+      (stanje * crka_ali_eps * crka_ali_eps * stanje * (char list)) list;
     zacetno_stanje : stanje;
     zacetni_skladovni_simbol : char;
     sprejemna_stanja : stanje list;
@@ -43,6 +46,7 @@ let dodaj_sprejemno_stanje stanje avtomat =
     sprejemna_stanja = stanje :: avtomat.sprejemna_stanja;
   }
 
+(* Funkcija preveri, ali je prehod z danim stanjem, vhodnim simbol ter skladovnim simbolom mogooč in vrne izhodno stanje ter izhodni skladovni niz*)
 let prehodna_funkcija avtomat stanje vhodni_simbol skladovni_simbol =
   match
     List.find_opt
