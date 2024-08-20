@@ -50,24 +50,24 @@ let explode s = List.init (String.length s) (String.get s)
 let implode l = String.of_seq (List.to_seq l)
 
 (* Funkciji, ki za boljšo preglednost izhoda lepo izpiše nemudni opis. *)
-let pretty_print_nemudni_opis nemudni_opis =
+let pretty_print_nemudni_opis avtomat nemudni_opis =
   let print_vhodni_niz =
     match nemudni_opis.vhodni_niz with
-    | [] -> "ε"
+    | [] -> String.make 1 avtomat.prazni_simbol
     | _ -> implode nemudni_opis.vhodni_niz
   in
   let print_sklad =
     match nemudni_opis.sklad with
-    | [] -> "ε"
+    | [] -> String.make 1 avtomat.prazni_simbol
     | _ -> implode nemudni_opis.sklad
   in
   print_string ("(" ^ nemudni_opis.stanje ^ ", " ^ print_vhodni_niz ^ ", " ^ print_sklad ^ ")")
 
-let print_nemudni_opisi_list l =
+let print_nemudni_opisi_list avtomat l =
   let rec aux = function
     | [] -> print_endline ""
-    | [x] -> pretty_print_nemudni_opis x
-    | x :: xs -> pretty_print_nemudni_opis x; print_string " -> "; aux xs
+    | [x] -> pretty_print_nemudni_opis avtomat x
+    | x :: xs -> pretty_print_nemudni_opis avtomat x; print_string " -> "; aux xs
   in
   aux (List.rev l)
 
@@ -90,26 +90,26 @@ let pozeni avtomat niz =
     | [] -> (
       match nemudni_opis.sklad with
       (* Če je sklad prazen, zaključimo in sprejmemo niz. *)
-      | [] -> print_nemudni_opisi_list acc; print_endline " ★"; true
+      | [] -> print_nemudni_opisi_list avtomat acc; print_endline " ★"; true
       (* Če sklad ni prazen, preverimo, ali smo v enem od sprejemnih stanj. *)
       | _  -> if List.mem nemudni_opis.stanje avtomat.sprejemna_stanja then
-                (print_nemudni_opisi_list acc; print_endline " ★"; true)
+                (print_nemudni_opisi_list avtomat acc; print_endline " ★"; true)
               else
                 (* Če v sprejemnem stanju še nismo, lahko avtomat poženemo na praznem nizu. *)
                 match en_korak avtomat nemudni_opis false with
-                | None -> print_nemudni_opisi_list acc; print_endline ""; false
+                | None -> print_nemudni_opisi_list avtomat acc; print_endline ""; false
                 | Some nemudni_opis' -> aux (nemudni_opis' :: acc) nemudni_opis'
     )
     | _ ->
        (* Glede na to, ali preberemo simbol, se spustimo v obe možnosti. *)
        let en_korak_preberi =
          match en_korak avtomat nemudni_opis true with
-         | None -> print_nemudni_opisi_list acc; print_endline ""; false
+         | None -> print_nemudni_opisi_list avtomat acc; print_endline ""; false
          | Some nemudni_opis' -> aux (nemudni_opis' :: acc) nemudni_opis'
        in
        let en_korak_ne_preberi =
          match en_korak avtomat nemudni_opis false with
-         | None -> print_nemudni_opisi_list acc; print_endline ""; false
+         | None -> print_nemudni_opisi_list avtomat acc; print_endline ""; false
          | Some nemudni_opis' -> aux (nemudni_opis' :: acc) nemudni_opis'
        in
        (* Da bi avtom niz sprejel, mora uspeti vsaj ena veja. *)

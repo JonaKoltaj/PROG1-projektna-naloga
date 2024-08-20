@@ -13,10 +13,11 @@ type avtomat = {
       (stanje * crka_ali_eps * crka_ali_eps * stanje * (char list)) list;
     zacetno_stanje : stanje;
     zacetni_skladovni_simbol : char;
+    prazni_simbol : char;
     sprejemna_stanja : stanje list;
   }
 
-let prazen_avtomat zacetno_stanje zacetni_skladovni_simbol =
+let prazen_avtomat zacetno_stanje zacetni_skladovni_simbol prazni_simbol =
   {
     stanja = [ zacetno_stanje ];
     vhodna_abeceda = [];
@@ -24,6 +25,7 @@ let prazen_avtomat zacetno_stanje zacetni_skladovni_simbol =
     prehodna_relacija = [];
     zacetno_stanje;
     zacetni_skladovni_simbol;
+    prazni_simbol;
     sprejemna_stanja = [];
   }
 
