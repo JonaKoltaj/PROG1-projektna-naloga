@@ -1,2 +1,3 @@
 (library
- (name koncni_avtomati))
+ (name koncni_avtomati)
+ (libraries str))
