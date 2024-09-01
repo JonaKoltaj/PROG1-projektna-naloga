@@ -24,16 +24,21 @@ let update model = function
 (* Tekstovni vmesnik nam ponudi moznost trenuten avtomat spremeniti, ga izpisati, skozi avtomat pognati niz in ponastaviti stanje trenutnega avtomata. *)
 (* TO DO Shrani avtomat, uploadaj avtomat *)
 let rec izpisi_moznosti () =
+  print_endline "Vnesi stevilo od 0 do 4";
   print_endline "0) spremeni avtomat";
   print_endline "1) izpiši avtomat";
   print_endline "2) beri niz";
+  print_endline "3) naloži avtomat";
+  print_endline "4) shrani avtomat";
   print_string "> ";
   match read_line () with
   | "0" -> ZamenjajVmesnik VnosAvtomata
   | "1" -> ZamenjajVmesnik IzpisAvtomata
   | "2" -> ZamenjajVmesnik BranjeNiza
+  | "3" -> ZamenjajVmesnik NalozitevAvtomata
+  | "4" -> ZamenjajVmesnik ShranitevAvtomata
   | _ ->
-     print_endline "Napačen vnos, vnesi število od 0 do 2";
+     print_endline "Napačen vnos, vnesi število od 0 do 4";
      izpisi_moznosti ()
 
 let rec beri_niz avtomat =
@@ -61,6 +66,8 @@ let view model =
   | IzpisAvtomata -> IzpisiAvtomat model.avtomat
   | VnosAvtomata -> izpisi_moznosti_vnosa model.avtomat
   | BranjeNiza -> beri_niz model.avtomat
+  | ShranitevAvtomata -> _
+  | NalozitevAvtomata -> _
 
 let rec loop model =
   let msg = view model in

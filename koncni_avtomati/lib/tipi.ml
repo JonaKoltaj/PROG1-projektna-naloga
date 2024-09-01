@@ -5,8 +5,10 @@ type stanje_vmesnika =
   | IzpisAvtomata
   | VnosAvtomata
   | BranjeNiza
+  | NalozitevAvtomata
+  | ShranitevAvtomata
 
-(* Model vsebuje podatke o avtomatu, koncnem stanju avtomata, skladu in stanju vmesnika. *)
+(* Model vsebuje podatke o avtomatu in stanju vmesnika. *)
 type model = {
     avtomat : avtomat;
     stanje_vmesnika : stanje_vmesnika;

@@ -124,6 +124,7 @@ let rec vnesi_prehod avtomat =
 
 (* Funkcija, ki nam izpise moznosti za vnos/spremembo trenutnega avtomata. *)
 let rec izpisi_moznosti_vnosa avtomat =
+  print_endline "Vnesi število od 0 do 6";
   print_endline "0) ponastavi avtomat";
   print_endline "1) dodaj vhodne simbole";
   print_endline "2) dodaj skladovne simbole";
