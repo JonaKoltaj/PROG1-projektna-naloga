@@ -6,7 +6,6 @@ type stanje_vmesnika =
   | VnosAvtomata
   | BranjeNiza
   | NalozitevAvtomata
-  | ShranitevAvtomata
 
 (* Model vsebuje podatke o avtomatu in stanju vmesnika. *)
 type model = {
@@ -19,3 +18,4 @@ type msg =
   | ZamenjajVmesnik of stanje_vmesnika
   | ZamenjajAvtomat of avtomat
   | IzpisiAvtomat of avtomat
+  | ShraniAvtomat of avtomat

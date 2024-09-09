@@ -50,7 +50,6 @@ let rec vnesi_prehod avtomat =
   let prazni_simbol = (String.make 1 avtomat.prazni_simbol) in
   (* Vnos prehoda razdelimo na dva dela; vhodni in izhodni del relacije. *)
   print_endline "Vnesi vhodno trojico oblike \"(stanje, vhodni simbol, skladovni simbol)\".";
-  (* Pri tem tekstovnem vmesniku je crka E rezervirana za prazni simbol. Ni blo druge:(( *)
   print_endline ("Za vnos praznega simbola uporabi simbol " ^ prazni_simbol ^ ".");
   print_string "> ";
   (* Z regexom preberemo vnos in se zapeljemo skozi vse mozne napacne vnose.
@@ -131,7 +130,8 @@ let rec izpisi_moznosti_vnosa avtomat =
   print_endline "3) dodaj sprejemno stanje";
   print_endline "4) dodaj nesprejemno stanje";
   print_endline "5) dodaj prehod";
-  print_endline "6) nazaj";
+  print_endline "6) shrani avtomat";
+  print_endline "7) nazaj";
   print_string "> ";
   match read_line () with
   | "0" -> ZamenjajAvtomat (ponastavi_avtomat ())
@@ -140,7 +140,8 @@ let rec izpisi_moznosti_vnosa avtomat =
   | "3" -> ZamenjajAvtomat (vnesi_stanje dodaj_sprejemno_stanje avtomat)
   | "4" -> ZamenjajAvtomat (vnesi_stanje dodaj_nesprejemno_stanje avtomat)
   | "5" -> ZamenjajAvtomat (vnesi_prehod avtomat)
-  | "6" -> ZamenjajVmesnik SeznamMoznosti
+  | "6" -> ShraniAvtomat avtomat
+  | "7" -> ZamenjajVmesnik SeznamMoznosti
   | _ ->
-     print_endline "Napačen vnos, vnesi število od 0 do 6";
+     print_endline "Napačen vnos, vnesi število od 0 do 7";
      izpisi_moznosti_vnosa avtomat

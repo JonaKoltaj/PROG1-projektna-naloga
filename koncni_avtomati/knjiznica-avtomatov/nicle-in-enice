@@ -1,8 +1,8 @@
-Stanja = {p q r}
-Vhodna abeceda = {0 1}
-Skladovna abeceda = {A Z}
-Zacetno stanje = {p}
-Zacetni skladovni simbol = {Z}
-Prazni simbol = {E}
-Sprejemna stanja = {r}
-Prehodi = {(p, 0, Z, p, AZ) (p, 0, A, p, AA) (p, E, Z, q, Z) (p, E, A, q, A) (q, 1, A, q, E) (q, E, Z, r, Z)}
+p q r
+0 1
+A Z
+p
+Z
+E
+r
+(p,0,Z,p,AZ) (p,0,A,p,AA) (p,E,Z,q,Z) (p,E,A,q,A) (q,1,A,q,E) (q,E,Z,r,Z)
