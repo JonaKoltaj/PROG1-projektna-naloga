@@ -29,14 +29,17 @@ let prazen_avtomat zacetno_stanje zacetni_skladovni_simbol prazni_simbol =
     sprejemna_stanja = [];
   }
 
-let dodaj_nesprejemno_stanje stanje avtomat =
-  { avtomat with stanja = stanje :: avtomat.stanja }
+let dodaj_stanje stanje avtomat =
+  if List.mem stanje avtomat.stanja then avtomat
+  else { avtomat with stanja = stanje :: avtomat.stanja }
 
 let dodaj_vhodni_simbol simbol avtomat =
-  { avtomat with vhodna_abeceda = simbol :: avtomat.vhodna_abeceda }
+  if List.mem simbol avtomat.vhodna_abeceda then avtomat
+  else { avtomat with vhodna_abeceda = simbol :: avtomat.vhodna_abeceda }
 
 let dodaj_skladovni_simbol simbol avtomat =
-  { avtomat with skladovna_abeceda = simbol :: avtomat.skladovna_abeceda }
+  if List.mem simbol avtomat.skladovna_abeceda then avtomat
+  else { avtomat with skladovna_abeceda = simbol :: avtomat.skladovna_abeceda }
 
 let dodaj_prehod stanje1 vhodni_simbol skladovni_simbol stanje2 skladovni_niz avtomat =
   { avtomat with prehodna_relacija = (stanje1, vhodni_simbol, skladovni_simbol, stanje2, skladovni_niz) :: avtomat.prehodna_relacija }

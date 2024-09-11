@@ -20,12 +20,12 @@ let update model = function
 
   | ZamenjajVmesnik stanje_vmesnika -> { model with stanje_vmesnika }
   | ZamenjajAvtomat avtomat -> izpisi_avtomat avtomat; { model with avtomat }
-  | IzpisiAvtomat avtomat -> izpisi_avtomat avtomat; { model with stanje_vmesnika = SeznamMoznosti }
+  | IzpisiAvtomat avtomat -> izpisi_avtomat avtomat; { avtomat; stanje_vmesnika = SeznamMoznosti }
   | ShraniAvtomat avtomat -> shrani_avtomat avtomat; { model with stanje_vmesnika = SeznamMoznosti }
 
 (* Tekstovni vmesnik nam ponudi moznost trenuten avtomat spremeniti, ga izpisati, skozi avtomat pognati niz in ponastaviti stanje trenutnega avtomata. *)
 let rec izpisi_moznosti () =
-  print_endline "Vnesi stevilo od 0 do 4";
+  print_endline "Vnesi stevilo od 0 do 3";
   print_endline "0) spremeni avtomat";
   print_endline "1) izpiši avtomat";
   print_endline "2) beri niz";

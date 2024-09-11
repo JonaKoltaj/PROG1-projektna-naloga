@@ -1,12 +1,13 @@
 open Avtomat
 open Ide_gas
 open Tipi
+open Izpis_avtomata
 
 (* Avtomat sprejema nize oblike 0^n1^n in zavrača vse druge binarne nize. *)
 let nicle_in_enice =
   prazen_avtomat "p" 'Z' 'E'
   |> dodaj_sprejemno_stanje "r"
-  |> dodaj_nesprejemno_stanje "q"
+  |> dodaj_stanje "q"
   |> dodaj_vhodni_simbol '0'
   |> dodaj_vhodni_simbol '1'
   |> dodaj_skladovni_simbol 'A'
@@ -69,7 +70,6 @@ let read_lines file =
     | None -> close_in ic; List.rev acc in
   aux []
 
-  (* !!!! nared da se ti ne 2x steje skladovni simbol (mybe lah ze v avtomatu to nrdis) *)
 let preberi_datoteko str = 
   (* Vrstice bodo vedno dolzine 8 *)
   let vrstice = Array.of_list (read_lines str) in
@@ -85,17 +85,11 @@ let preberi_datoteko str =
     | [] -> acc
     | x :: xs -> dodaj f xs (f x acc)
   in
-  let rec dodaj_stanja list acc = match list with
-    | [] -> acc
-    | x :: xs ->
-      if List.mem x acc.stanja then dodaj_stanja xs acc
-      else dodaj_stanja xs (dodaj_nesprejemno_stanje x acc)
-  in
   prazen_avtomat zacetno_stanje zacetni_skladovni_simbol prazni_simbol
   |> dodaj dodaj_sprejemno_stanje sprejemna_stanja
   |> dodaj dodaj_vhodni_simbol vhodna_abeceda
   |> dodaj dodaj_skladovni_simbol skladovna_abeceda
-  |> dodaj_stanja stanja
+  |> dodaj dodaj_stanje stanja
   |> dodaj string_to_prehod prehodi
   
 let nalozi_avtomat () =
@@ -105,34 +99,16 @@ let nalozi_avtomat () =
 
 
 
-
-
-
-(* zacetni acc tukej je ""*)
-let rec zapisi_list_of_string acc = function
-  | [] -> acc
-  | [x] -> x ^ acc
-  | x :: xs -> (zapisi_list_of_string (" " ^ x) xs)
-
-let crka_ali_eps_to_str avtomat = function
-  | Eps () -> String.make 1 (avtomat.prazni_simbol)
-  | Crka a -> String.make 1 a
-
-let skl_niz_to_str avtomat = function
-  | [] -> String.make 1 (avtomat.prazni_simbol)
-  | skl_niz -> implode skl_niz
-
-
 let prehod_to_str avtomat (st1,vs,ss,st2,sn) =
-  "(" ^ st1 ^ "," ^ (crka_ali_eps_to_str avtomat vs) ^ "," ^ (crka_ali_eps_to_str avtomat ss) ^ "," ^ st2 ^ "," ^ (skl_niz_to_str avtomat sn) ^ ")"
+  "(" ^ st1 ^ "," ^ (crka_ali_eps_to_str avtomat vs) ^ "," ^ (crka_ali_eps_to_str avtomat ss) ^ "," ^ st2 ^ "," ^ (skladovni_niz_v_ta_pravi_niz avtomat sn) ^ ")"
 
 let avtomat_to_content avtomat =
-  let stanja_izpis = (zapisi_list_of_string "" avtomat.stanja) ^ "\n" in 
-  let vhodna_abeceda_izpis = (zapisi_list_of_string "" (List.map (fun a -> String.make 1 a) (avtomat.vhodna_abeceda))) ^ "\n" in
-  let skladovna_abeceda_izpis = (zapisi_list_of_string "" (List.map (fun a -> String.make 1 a) (avtomat.skladovna_abeceda))) ^ "\n" in
-  let sprejemna_stanja_izpis = (zapisi_list_of_string "" avtomat.sprejemna_stanja) ^ "\n" in
-  let prehodi_izpis = (zapisi_list_of_string "" (List.map (prehod_to_str avtomat) avtomat.prehodna_relacija)) ^ "\n" in
-  let prvi_del = stanja_izpis ^  vhodna_abeceda_izpis ^ skladovna_abeceda_izpis ^ avtomat.zacetno_stanje ^ "\n" in
+  let stanja_izpis = (String.concat " " avtomat.stanja) ^ "\n" in 
+  let vhodna_abeceda_izpis = (String.concat " " (List.map (fun a -> String.make 1 a) avtomat.vhodna_abeceda)) ^ "\n" in
+  let skladovna_abeceda_izpis = (String.concat " " (List.map (fun a -> String.make 1 a) avtomat.skladovna_abeceda)) ^ "\n" in
+  let sprejemna_stanja_izpis = (String.concat " " avtomat.sprejemna_stanja) ^ "\n" in
+  let prehodi_izpis = (String.concat " " (List.map (prehod_to_str avtomat) avtomat.prehodna_relacija)) in
+  let prvi_del = stanja_izpis ^ vhodna_abeceda_izpis ^ skladovna_abeceda_izpis ^ avtomat.zacetno_stanje ^ "\n" in
   let drugi_del = (String.make 1 avtomat.zacetni_skladovni_simbol) ^ "\n" ^ (String.make 1 avtomat.prazni_simbol) ^ "\n" in
   let tretji_del = sprejemna_stanja_izpis ^ prehodi_izpis in
   prvi_del ^ drugi_del ^ tretji_del

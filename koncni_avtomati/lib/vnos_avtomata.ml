@@ -138,7 +138,7 @@ let rec izpisi_moznosti_vnosa avtomat =
   | "1" -> ZamenjajAvtomat (vnesi_simbole dodaj_vhodni_simbol avtomat)
   | "2" -> ZamenjajAvtomat (vnesi_simbole dodaj_skladovni_simbol avtomat)
   | "3" -> ZamenjajAvtomat (vnesi_stanje dodaj_sprejemno_stanje avtomat)
-  | "4" -> ZamenjajAvtomat (vnesi_stanje dodaj_nesprejemno_stanje avtomat)
+  | "4" -> ZamenjajAvtomat (vnesi_stanje dodaj_stanje avtomat)
   | "5" -> ZamenjajAvtomat (vnesi_prehod avtomat)
   | "6" -> ShraniAvtomat avtomat
   | "7" -> ZamenjajVmesnik SeznamMoznosti

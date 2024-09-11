@@ -10,9 +10,9 @@ let print_list lst =
   in
   aux lst
 
-let print_crka_ali_eps avtomat = function
-  | Eps () -> print_char avtomat.prazni_simbol
-  | Crka x -> print_char x
+let crka_ali_eps_to_str avtomat = function
+  | Eps () -> String.make 1 (avtomat.prazni_simbol)
+  | Crka x -> String.make 1 x
 
 let skladovni_niz_v_ta_pravi_niz avtomat = function
   | [] -> String.make 1 avtomat.prazni_simbol
@@ -22,8 +22,8 @@ let rec print_prehodi avtomat = function
   | [] -> ()
   | (s1, vsimb, ssimb, s2, chars) :: xs ->
      print_string ("(" ^ s1 ^ ", ");
-     print_crka_ali_eps avtomat vsimb; print_string ", ";
-     print_crka_ali_eps avtomat ssimb; print_string ")";
+     print_string ((crka_ali_eps_to_str avtomat vsimb) ^ ", ");
+     print_string ((crka_ali_eps_to_str avtomat ssimb) ^ ", ");
      print_string " -> ";
      print_string ("(" ^ s2 ^ ", ");
      print_endline ((skladovni_niz_v_ta_pravi_niz avtomat chars) ^ ")");

@@ -76,7 +76,7 @@ let print_nemudni_opisi_list avtomat l =
    Na koncu vsake veje, ko dobimo resničnostno vrednost, funkcija tudi izpiše zaporedje nemudnih opisov, ki je vodilo do vrednosti. *)
 let pozeni avtomat niz =
   let vhodni_niz = explode niz in
-  (* Iz danega avtomata preberamo zacetni nemudni opis. *)
+  (* Iz danega avtomata preberemo zacetni nemudni opis. *)
   let zacetni_nemudni_opis =
     {
       stanje = avtomat.zacetno_stanje;
