@@ -1,5 +1,5 @@
 open Avtomat
-open Ide_gas
+open Zagon
 open Tipi
 open Vnos_avtomata
 open Izpis_avtomata

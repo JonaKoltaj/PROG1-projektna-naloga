@@ -1,5 +1,5 @@
 open Avtomat
-open Ide_gas
+open Zagon
 open Tipi
 
 (* Avtomat sprejema nize oblike 0^n1^n in zavrača vse druge binarne nize. *)
@@ -37,7 +37,7 @@ let rec izberi_datoteko array_avtomatov =
 
 
 (* Pomozna funkcija, ki vzame string oblike "a b c" in ga spremeni v seznam [a,b,c]*)
-let string_to_list_of_char str = 
+let string_to_list_of_char str =
   let list = explode str in
   let f a = if a == ' ' then None else Some a in
   List.filter_map f list
@@ -70,7 +70,7 @@ let read_lines file =
   aux []
 
   (* !!!! nared da se ti ne 2x steje skladovni simbol (mybe lah ze v avtomatu to nrdis) *)
-let preberi_datoteko str = 
+let preberi_datoteko str =
   (* Vrstice bodo vedno dolzine 8 *)
   let vrstice = Array.of_list (read_lines str) in
   let stanja = string_to_list vrstice.(0) in
@@ -97,7 +97,7 @@ let preberi_datoteko str =
   |> dodaj dodaj_skladovni_simbol skladovna_abeceda
   |> dodaj_stanja stanja
   |> dodaj string_to_prehod prehodi
-  
+
 let nalozi_avtomat () =
   let array_avtomatov = Sys.readdir "./knjiznica-avtomatov" in
   let datoteka = izberi_datoteko array_avtomatov in
@@ -127,7 +127,7 @@ let prehod_to_str avtomat (st1,vs,ss,st2,sn) =
   "(" ^ st1 ^ "," ^ (crka_ali_eps_to_str avtomat vs) ^ "," ^ (crka_ali_eps_to_str avtomat ss) ^ "," ^ st2 ^ "," ^ (skl_niz_to_str avtomat sn) ^ ")"
 
 let avtomat_to_content avtomat =
-  let stanja_izpis = (zapisi_list_of_string "" avtomat.stanja) ^ "\n" in 
+  let stanja_izpis = (zapisi_list_of_string "" avtomat.stanja) ^ "\n" in
   let vhodna_abeceda_izpis = (zapisi_list_of_string "" (List.map (fun a -> String.make 1 a) (avtomat.vhodna_abeceda))) ^ "\n" in
   let skladovna_abeceda_izpis = (zapisi_list_of_string "" (List.map (fun a -> String.make 1 a) (avtomat.skladovna_abeceda))) ^ "\n" in
   let sprejemna_stanja_izpis = (zapisi_list_of_string "" avtomat.sprejemna_stanja) ^ "\n" in

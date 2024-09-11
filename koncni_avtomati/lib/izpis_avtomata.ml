@@ -1,5 +1,5 @@
 open Avtomat
-open Ide_gas
+open Zagon
 
 let print_list lst =
   print_string "{";
