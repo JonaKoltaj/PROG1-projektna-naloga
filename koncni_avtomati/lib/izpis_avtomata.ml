@@ -23,7 +23,7 @@ let rec print_prehodi avtomat = function
   | (s1, vsimb, ssimb, s2, chars) :: xs ->
      print_string ("(" ^ s1 ^ ", ");
      print_string ((crka_ali_eps_to_str avtomat vsimb) ^ ", ");
-     print_string ((crka_ali_eps_to_str avtomat ssimb) ^ ", ");
+     print_string ((crka_ali_eps_to_str avtomat ssimb) ^ ")");
      print_string " -> ";
      print_string ("(" ^ s2 ^ ", ");
      print_endline ((skladovni_niz_v_ta_pravi_niz avtomat chars) ^ ")");
