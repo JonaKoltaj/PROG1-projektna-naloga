@@ -103,17 +103,17 @@ let pozeni avtomat niz =
     )
     | _ ->
        (* Glede na to, ali preberemo simbol, se spustimo v obe možnosti. *)
-       let en_korak_preberi =
+       let en_korak_preberi () =
          match en_korak avtomat nemudni_opis true with
          | None -> print_nemudni_opisi_list avtomat acc; print_endline ""; false
          | Some nemudni_opis' -> aux (nemudni_opis' :: acc) nemudni_opis'
        in
-       let en_korak_ne_preberi =
+       let en_korak_ne_preberi () =
          match en_korak avtomat nemudni_opis false with
          | None -> print_nemudni_opisi_list avtomat acc; print_endline ""; false
          | Some nemudni_opis' -> aux (nemudni_opis' :: acc) nemudni_opis'
        in
        (* Da bi avtom niz sprejel, mora uspeti vsaj ena veja. *)
-       en_korak_preberi || en_korak_ne_preberi
+       en_korak_preberi ()|| en_korak_ne_preberi ()
   in
   aux [zacetni_nemudni_opis] zacetni_nemudni_opis
