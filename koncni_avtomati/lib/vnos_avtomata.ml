@@ -26,7 +26,7 @@ let ponastavi_avtomat () =
   prazen_avtomat zacetno_stanje zacetni_skladovni_simbol prazni_simbol
 
 
-(* Genericna pomozna funkcija za spremembo avtomata, ki vnese simbole dane abecede.*)
+(* Generična pomožna funkcija za spremembo avtomata, ki vnese simbole dane abecede.*)
 let vnesi_simbole f avtomat =
   print_endline "Vnesi niz z želenimi simboli";
   print_string "> ";
@@ -37,7 +37,7 @@ let vnesi_simbole f avtomat =
   in
   aux avtomat simboli
 
-(* Genericna pomozna funkcija za spremembo avtomata, ki vnese zeleno stanje.*)
+(* Generična pomožna funkcija za spremembo avtomata, ki vnese želeno stanje.*)
 let vnesi_stanje f avtomat =
   print_endline "Vnesi želeno novo stanje";
   print_string "> ";
@@ -45,7 +45,7 @@ let vnesi_stanje f avtomat =
   f stanje avtomat
 
 
-(* Pomozna funkcija za spremembo avtomata, ki vnese prehod. *)
+(* Pomožna funkcija za spremembo avtomata, ki vnese prehod. *)
 let rec vnesi_prehod avtomat =
   let prazni_simbol = (String.make 1 avtomat.prazni_simbol) in
   (* Vnos prehoda razdelimo na dva dela; vhodni in izhodni del relacije. *)
@@ -121,7 +121,7 @@ let rec vnesi_prehod avtomat =
       vnesi_prehod avtomat
     )
 
-(* Funkcija, ki nam izpise moznosti za vnos/spremembo trenutnega avtomata. *)
+(* Funkcija, ki nam izpiše možnosti za vnos/spremembo trenutnega avtomata. *)
 let rec izpisi_moznosti_vnosa avtomat =
   print_endline "Vnesi število od 0 do 6";
   print_endline "0) ponastavi avtomat";

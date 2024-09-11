@@ -1,7 +1,8 @@
 open Avtomat
-(* Če to ne dela napiši Avtomat.stanje ipd *)
 
-(* Nemudni opis opiše trenutno stanje avtomata*)
+(* V tej datoteki so zapisane funkcije, ki nam avtomat poženejo z danim nizom. *)
+
+(* Nemudni opis opiše trenutno stanje avtomata. To vsebuje tudi sklad. *)
 type nemudni_opis =
   {
     stanje : stanje;
@@ -9,7 +10,7 @@ type nemudni_opis =
     sklad : char list;
   }
 
-(* Funkcija sprejme nemudni_opis ter boolean, ki nam pove, ali naj avtomat prebere naslednji znak vhodnega niza.
+(* Funkcija sprejme nemudni_opis ter resničnostno vrednost, ki nam pove, ali naj avtomat prebere naslednji znak vhodnega niza.
    Funkcija vrne None, če koraka ni moč izvesti, in Some nemudni_opis, če avtomat ta korak lahko izvede. *)
 let en_korak avtomat nemudni_opis preberi =
   (* Preberemo vrhni skladovni simbol. Če je sklad prazen, preberemo prazni niz.*)

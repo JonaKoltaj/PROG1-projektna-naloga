@@ -5,6 +5,9 @@ open Vnos_avtomata
 open Izpis_avtomata
 open Knjiznica
 
+(* Datoteka, ki požene celotni tekstovni vmesnik. *)
+
+(* Funkcija prejme model in msg, vrne pa posodobljen model. *)
 let update model = function
   | PreberiNiz niz -> (
     match pozeni model.avtomat niz with
@@ -17,13 +20,12 @@ let update model = function
       { model with stanje_vmesnika = SeznamMoznosti }
     )
   )
-
   | ZamenjajVmesnik stanje_vmesnika -> { model with stanje_vmesnika }
   | ZamenjajAvtomat avtomat -> izpisi_avtomat avtomat; { model with avtomat }
   | IzpisiAvtomat avtomat -> izpisi_avtomat avtomat; { avtomat; stanje_vmesnika = SeznamMoznosti }
   | ShraniAvtomat avtomat -> shrani_avtomat avtomat; { model with stanje_vmesnika = SeznamMoznosti }
 
-(* Tekstovni vmesnik nam ponudi moznost trenuten avtomat spremeniti, ga izpisati, skozi avtomat pognati niz in ponastaviti stanje trenutnega avtomata. *)
+(* Tekstovni vmesnik nam ponudi moznost trenuten avtomat spremeniti, ga izpisati, skozi avtomat pognati niz ali pa avtomat naložiti. *)
 let rec izpisi_moznosti () =
   print_endline "Vnesi stevilo od 0 do 3";
   print_endline "0) spremeni avtomat";
@@ -58,7 +60,7 @@ let rec beri_niz avtomat =
   else
     PreberiNiz str
 
-
+(* Funkcija glede na stanje vmesnika požene funkcijo, ki vrne msg. *)
 let view model =
   match model.stanje_vmesnika with
   | SeznamMoznosti -> izpisi_moznosti ()

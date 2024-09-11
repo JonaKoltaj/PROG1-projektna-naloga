@@ -1,5 +1,6 @@
-(*Koncni avtomati s skladom*)
+(* V tej datoteki je definiran avtomat ter različne pomožne funkcije, ki avtomat zgradijo. *)
 
+(* Definramo stanje crka_ali_eps, saj simboli tega tipa lahko predstavljajo tudi prazni niz. *)
 type stanje = string
 type crka_ali_eps = Crka of char | Eps of unit
 
@@ -42,6 +43,7 @@ let dodaj_skladovni_simbol simbol avtomat =
   else { avtomat with skladovna_abeceda = simbol :: avtomat.skladovna_abeceda }
 
 let dodaj_prehod stanje1 vhodni_simbol skladovni_simbol stanje2 skladovni_niz avtomat =
+  if List.mem (stanje1, vhodni_simbol, skladovni_simbol, stanje2, skladovni_niz) avtomat.prehodna_relacija then avtomat
   { avtomat with prehodna_relacija = (stanje1, vhodni_simbol, skladovni_simbol, stanje2, skladovni_niz) :: avtomat.prehodna_relacija }
 
 let dodaj_sprejemno_stanje stanje avtomat =

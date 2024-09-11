@@ -3,6 +3,8 @@ open Zagon
 open Tipi
 open Izpis_avtomata
 
+(* Datoteka pomožnih funkcij za shranjevanje in nalaganje avtomata, uporabljenih v tekstovnem vmesniku. *)
+
 (* Avtomat sprejema nize oblike 0^n1^n in zavrača vse druge binarne nize. *)
 let nicle_in_enice =
   prazen_avtomat "p" 'Z' 'E'
@@ -18,7 +20,9 @@ let nicle_in_enice =
   |> dodaj_prehod "q" (Crka '1') (Crka 'A') "q" []
   |> dodaj_prehod "q" (Eps ()  ) (Crka 'Z') "r" ['Z']
 
+(* Sledeče funkcije so namenjene nalaganju avtomata iz datoteke v mapi knjznica-avtomatov v trenutni model. *)
 
+(* Funkcija sprejme tabelo imen datotek v mapi knjiznica-avtomatov in uporaniku prepusti izbiro, vrne pa niz imena izbrane datoteke. *)
 let rec izberi_datoteko array_avtomatov =
   let n = Array.length array_avtomatov in
   print_endline ("Vnesi število od 0 do " ^ Int.to_string (n - 1));
@@ -37,7 +41,7 @@ let rec izberi_datoteko array_avtomatov =
          izberi_datoteko array_avtomatov
 
 
-(* Pomozna funkcija, ki vzame string oblike "a b c" in ga spremeni v seznam [a,b,c]*)
+(* Pomozna funkcija, ki vzame string oblike "a b c" in ga spremeni v seznam simbolov [a,b,c] *)
 let string_to_list_of_char str =
   let list = explode str in
   let f a = if a == ' ' then None else Some a in
@@ -48,6 +52,7 @@ let string_to_list str = String.split_on_char ' ' str
 (* Sprejme string oblike (a,b,c,d,e) in doda prehod (torej vrne avtomat) *)
 let string_to_prehod str avtomat =
   let rg = Str.regexp "(\\(.+?\\),\\(.\\),\\(.\\),\\(.+?\\),\\(.+?\\))" in
+  (* Regex je treba najprej pognati, da lahko gledamo matched groups, ta if ne služi ničemer drugem. *)
   if Str.string_match rg str 0 then
     let stanje1 = Str.matched_group 1 str in
     let vhodni_simbol = Str.matched_group 2 str in
@@ -60,7 +65,7 @@ let string_to_prehod str avtomat =
     dodaj_prehod stanje1 vhodni_simbol' skladovni_simbol' stanje2 skladovni_niz' avtomat
   else avtomat
 
-
+(* Pomožna funkcija, ki prebere datoteko in vrne seznam vseh vrstic. *)
 let read_lines file =
   let ic = open_in file in
   let try_read () =
@@ -70,6 +75,8 @@ let read_lines file =
     | None -> close_in ic; List.rev acc in
   aux []
 
+(* Preberemo datoteko, jo spremenimo v tabelo dolžine 8 (to bo vedno res, saj je avtomat tako definiran) *)
+(* Postopoma dodamo vse komponente v avtomat. *)
 let preberi_datoteko str = 
   (* Vrstice bodo vedno dolzine 8 *)
   let vrstice = Array.of_list (read_lines str) in
@@ -99,9 +106,13 @@ let nalozi_avtomat () =
 
 
 
+(* Sledeče funkcije so namenjene shranjevanju avtomata, ki je v trenutnem modelu, v datoteko. *)
+
 let prehod_to_str avtomat (st1,vs,ss,st2,sn) =
   "(" ^ st1 ^ "," ^ (crka_ali_eps_to_str avtomat vs) ^ "," ^ (crka_ali_eps_to_str avtomat ss) ^ "," ^ st2 ^ "," ^ (skladovni_niz_v_ta_pravi_niz avtomat sn) ^ ")"
 
+(* Funkcija, ki spremeni avtomat v niz, primeren za zapis v datoteko. *)
+(* Ta niz se sklada s tem, na kakšen način datoteke beremo. *)
 let avtomat_to_content avtomat =
   let stanja_izpis = (String.concat " " avtomat.stanja) ^ "\n" in 
   let vhodna_abeceda_izpis = (String.concat " " (List.map (fun a -> String.make 1 a) avtomat.vhodna_abeceda)) ^ "\n" in
@@ -113,6 +124,8 @@ let avtomat_to_content avtomat =
   let tretji_del = sprejemna_stanja_izpis ^ prehodi_izpis in
   prvi_del ^ drugi_del ^ tretji_del
 
+(* Ko uporabnik shranjuje avtomat, vpiše ime danega avtomata. *)
+(* Če datoteka s tem imenom že obstaja, se avtomat izpiše tja, drugače datoteko ustvari. *)
 let shrani_avtomat avtomat =
   print_endline "Vnesi ime avtomata";
   print_string "> ";

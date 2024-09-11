@@ -1,5 +1,7 @@
 open Avtomat
 
+(* Tukaj so shranjeni tipi, ki jih je zaradi preglednosti boljše imeti na enem mestu. *)
+
 type stanje_vmesnika =
   | SeznamMoznosti
   | IzpisAvtomata

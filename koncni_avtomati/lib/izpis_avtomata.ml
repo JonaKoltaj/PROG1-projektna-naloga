@@ -1,6 +1,8 @@
 open Avtomat
 open Zagon
 
+(* Datoteka namenjena pomožnim funkcijam za izpisovanje avtomata, uporabljenim v tekstovnem vmesniku. *)
+
 let print_list lst =
   print_string "{";
   let rec aux = function
