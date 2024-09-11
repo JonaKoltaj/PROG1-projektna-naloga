@@ -1,5 +1,5 @@
 open Avtomat
-open Ide_gas
+open Zagon
 open Tipi
 open Izpis_avtomata
 
@@ -38,7 +38,7 @@ let rec izberi_datoteko array_avtomatov =
 
 
 (* Pomozna funkcija, ki vzame string oblike "a b c" in ga spremeni v seznam [a,b,c]*)
-let string_to_list_of_char str = 
+let string_to_list_of_char str =
   let list = explode str in
   let f a = if a == ' ' then None else Some a in
   List.filter_map f list
@@ -91,7 +91,7 @@ let preberi_datoteko str =
   |> dodaj dodaj_skladovni_simbol skladovna_abeceda
   |> dodaj dodaj_stanje stanja
   |> dodaj string_to_prehod prehodi
-  
+
 let nalozi_avtomat () =
   let array_avtomatov = Sys.readdir "./knjiznica-avtomatov" in
   let datoteka = izberi_datoteko array_avtomatov in

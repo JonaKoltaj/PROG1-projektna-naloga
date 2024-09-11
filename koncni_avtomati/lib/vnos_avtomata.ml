@@ -1,6 +1,6 @@
 open Avtomat
 open Tipi
-open Ide_gas
+open Zagon
 
 (* Pomozna funkcija za spremembo avtomata, ki uporabnika prosi za zacetno stanje in zacetni skladovni simbol.
  Funkcija preveri, ce je vnos veljaven, nato pa ponastavi avtomat.*)
